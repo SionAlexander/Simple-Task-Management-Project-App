@@ -1,8 +1,13 @@
-import api from './api';
-import { Task } from '@/types/task';
+export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE';
 
-export const getTasks = async (): Promise<Task[]> => (await api.get('/tasks')).data;
-export const createTask = async (payload: Partial<Task>) => (await api.post('/tasks', payload)).data;
-export const updateTask = async (id: number, payload: Partial<Task>) => (await api.put(`/tasks/${id}`, payload)).data;
-export const deleteTask = async (id: number) => (await api.delete(`/tasks/${id}`)).data;
-export const getUsers = async () => (await api.get('/users')).data;
+export interface Task {
+  id: number;
+  title: string;
+  description?: string;
+  status: TaskStatus;
+  deadline: string; // ISO string
+  assigneeId: number;
+  assignee?: { id: number; name: string };
+  createdAt: string;
+  updatedAt: string;
+}
